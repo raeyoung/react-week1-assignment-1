@@ -26,27 +26,22 @@ function createElement(tagName, props, ...children) {
   return element;
 }
 
-let count = 0;
+function render({ count }) {
+  function handleClick() {
+    render({ count: count + 1 });
+  }
 
-function handleClick() {
-  count += 1;
-  render();
-}
+  function handleClickNumber(value) {
+    render({ count: value });
+  }
 
-function handleClickNumber(value) {
-  count = value;
-  render();
-}
-// onClick={() => handleClick}, onClick={handleClick()}은 중괄호 안에서 계속 처리하려고 한다. render 계속 일어남
-function render() {
   const element = (
-    // eslint-disable-next-line react/jsx-filename-extension
     <div id='hello' className='greeting'>
       <p>Hello, world!</p>
       <p>by raeyoung</p>
       <p>
         <button type='button' onClick={handleClick}>
-          Click me! ({count})
+          Click me! ( {count} )
         </button>
       </p>
       <p>
@@ -64,4 +59,6 @@ function render() {
   document.getElementById('app').appendChild(element);
 }
 
-render();
+render({
+  count: 0,
+});
